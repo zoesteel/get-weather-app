@@ -22,10 +22,8 @@ class CitySearch extends Component {
 
     callAPI = () => {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&units=${this.state.units}&APPID=d5566182730361aa1c00849d2f86bb95`;     
-        axios.get(url)
-            
+        axios.get(url)            
             .then((response) => {
-                console.log(url)
                 this.setState({ 
                     city: response.data.name,
                     temperature: response.data.main.temp,
@@ -35,28 +33,21 @@ class CitySearch extends Component {
             })
             .catch((error) => { 
                 if (error.response) {
-                    console.log(error.response.data);
+                    // server responded with status other than 2xx
                     this.setState({
                         error: error.response.data.message
                     });
                     this.props.onSearchComplete(undefined, undefined, undefined, undefined, undefined, this.state.error);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
+                    
                 } else if (error.request) {
-                    /*
-                     * The request was made but no response was received, `error.request`
-                     * is an instance of XMLHttpRequest in the browser and an instance
-                     * of http.ClientRequest in Node.js
-                     */
-                    console.log(error.request);
-
+                    // if no response was received    
                     this.setState({
                         error: error.request
                     });
+
                     this.props.onSearchComplete(undefined, undefined, undefined, undefined, undefined, this.state.error);
                 } else {
-                    // Something happened in setting up the request and triggered an Error
-                    console.log('Error', error.message);
+                    // other error
                     this.setState({
                         error: error.message
                     });
