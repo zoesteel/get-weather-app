@@ -31,14 +31,6 @@ class App extends Component {
             message: `The temperature in ${city} is ${temperature}°${symbol}`,
         });
     }
-      
-    // callApi = async () => {
-    //     const response = await fetch('/weather');
-    //     const body = await response.json();
-    //     if (response.status !== 200) throw Error(body.message);
-        
-    //     return body;
-    // };
 
     render () {
         return (
@@ -60,11 +52,11 @@ class App extends Component {
                          <p>{this.state.error}</p>
                     }
                     
+                    {/* the city input form */}
                     <SearchForm 
                         onSearchComplete={this.handleSearch}
                     />
 
-                    
                 </header>
             </div>
         );
