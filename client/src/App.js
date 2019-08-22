@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import './App.scss';
+import './styles/App.scss';
 import SunIcon from './images/sun.png';
-import SearchForm from './SearchForm';
+import SearchForm from './components/SearchForm';
+import ResultMessage from './components/ResultMessage';
 
 class App extends Component {
 
@@ -9,6 +10,7 @@ class App extends Component {
         super(props);
         this.state = {
             city: '',
+            cityName: '',
             temperature: '',
             units: '',
             symbol: '',
@@ -20,15 +22,15 @@ class App extends Component {
     }
 
     // handles the API response
-    handleSearch(city, temperature, units, symbol, description, error) {
+    handleSearch(cityName, temperature, units, symbol, description, error) {
         this.setState({
-            city: city,
+            cityName: cityName,
             temperature: temperature,
             units: units,
             symbol: symbol,
             description: description,
             error: error,
-            message: `The temperature in ${city} is ${temperature}°${symbol}`,
+            message: `The temperature in ${cityName} is ${temperature}°${symbol}`,
         });
     }
 
@@ -39,18 +41,12 @@ class App extends Component {
                     <img src={SunIcon} alt="sun icon" className="sun" />
                     <h1 className="title">Check the weather</h1>
                     
-                    {/* if no error message exists then display the weather message */}
-                    { this.state.error === undefined &&
-                    <div className="weather-result">
-                        <h2>{this.state.description}</h2>                    
-                        <p>{this.state.message}</p>     
-                    </div>
-                    }
-
-                    {/* if error exists then display it */}
-                    { this.state.error !== undefined && 
-                         <p>{this.state.error}</p>
-                    }
+                    {/* the weather result or error message */}
+                    <ResultMessage 
+                        description={this.state.description}
+                        message={this.state.message}
+                        error={this.state.error}
+                    />
                     
                     {/* the city input form */}
                     <SearchForm 

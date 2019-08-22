@@ -4,7 +4,6 @@ class SearchForm extends Component {
 
     constructor(props){
         super(props)
-
         this.state = {
             city: '',            
             temperature: '',
@@ -46,20 +45,21 @@ class SearchForm extends Component {
                 units: this.state.units
             }),
         });
-       
+        
         const body = await response.json();
 
         if (response.status !== 200) throw Error(body.message);
         
         this.setState({ 
-            city: body.city,
+            cityName: body.city,
             temperature: body.temperature,
             description: body.description,
             message: `The temperature in ${body.city} is ${body.temperature}°${this.state.symbol}`,
             error: body.error
         });
 
-        this.props.onSearchComplete(this.state.city, this.state.temperature, this.state.units, this.state.symbol, this.state.description, this.state.error);
+        // pass the result back to the app
+        this.props.onSearchComplete(this.state.cityName, this.state.temperature, this.state.units, this.state.symbol, this.state.description, this.state.error);
     };
 
     render () {
