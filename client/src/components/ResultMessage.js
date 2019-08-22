@@ -5,7 +5,7 @@ function ResultMessage(props){
         <div>
             {/* if no error message exists then display the weather message */}
             { props.error === undefined &&
-                <div className="weather-result">
+                <div className="result">
                     <h2>{props.description}</h2>                    
                     <p>{props.message}</p>     
                 </div>
@@ -13,7 +13,9 @@ function ResultMessage(props){
 
             {/* if error exists then display it */}
             { props.error !== undefined && 
-                <p>{props.error}</p>
+                <div className="result">
+                    <p>{props.error}</p>
+                </div>
             }
         </div>
     )

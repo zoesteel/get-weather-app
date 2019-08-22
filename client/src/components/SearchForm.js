@@ -93,7 +93,7 @@ class SearchForm extends Component {
                         htmlFor="fahrenheit">Fahrenheit
                     </label>                            
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">SUBMIT</button>
             </form>
         )
     }

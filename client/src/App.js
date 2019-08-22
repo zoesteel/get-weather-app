@@ -39,7 +39,7 @@ class App extends Component {
             <div className="App">
                 <header className="App-header">
                     <img src={SunIcon} alt="sun icon" className="sun" />
-                    <h1 className="title">Check the weather</h1>
+                    <h1 className="app-title">Check the weather</h1>
                     
                     {/* the weather result or error message */}
                     <ResultMessage 
