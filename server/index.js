@@ -43,7 +43,6 @@ app.post('/weather', (req, res) => {
     
   axios.get(url)
     .then(response => {  
-        console.log(url)
         const cityName = response.data.name; 
         const temperature = response.data.main.temp;
         const description = response.data.weather[0].main;
@@ -55,10 +54,27 @@ app.post('/weather', (req, res) => {
         });
 
     })   
-    .catch(err => {
-        res.send(err);
-    }); 
+    // .catch(err => {
+    //     res.send(err);
+    // }); 
+    .catch((error) => { 
+        if (error.response) {
+            // server responded with status other than 2xx
+            res.send({
+                error: error.response.data.message
+            });            
+        } else if (error.request) {
+            // if no response was received    
+            res.send({
+                error: error.request
+            });
+        } else {
+            // other error
+            res.send({
+                error: error.message
+            });
+        }
+    })
 });
-
 
 app.listen(port);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.scss';
 import SunIcon from './images/sun.png';
-import CitySearch from './CitySearch';
+import SearchForm from './SearchForm';
 
 class App extends Component {
 
@@ -10,12 +10,26 @@ class App extends Component {
         this.state = {
             city: '',
             temperature: '',
-            units: 'metric',
-            symbol: 'C',
+            units: '',
+            symbol: '',
             description: '',
             message: '',
             error: undefined,            
         }        
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    // handles the API response
+    handleSearch(city, temperature, units, symbol, description, error) {
+        this.setState({
+            city: city,
+            temperature: temperature,
+            units: units,
+            symbol: symbol,
+            description: description,
+            error: error,
+            message: `The temperature in ${city} is ${temperature}°${symbol}`,
+        });
     }
       
     // callApi = async () => {
@@ -25,36 +39,6 @@ class App extends Component {
         
     //     return body;
     // };
-      
-    handleSubmit = async e => {
-        e.preventDefault();
-        const response = await fetch('/weather', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                city: this.state.city,
-                units: this.state.units
-            }),
-        });
-       
-        const body = await response.json();
-        this.setState({ 
-            city: body.city,
-            temperature: body.temperature,
-            description: body.description,
-            message: `The temperature in ${body.city} is ${body.temperature}°${this.state.symbol}`,
-         });
-    };
-
-    // handles change in radio buttons for imperial or metric
-    handleUnitChange = (e) => {
-        this.setState({
-            units: e.target.value,
-            symbol: e.target.id,
-        })
-    }
 
     render () {
         return (
@@ -63,64 +47,24 @@ class App extends Component {
                     <img src={SunIcon} alt="sun icon" className="sun" />
                     <h1 className="title">Check the weather</h1>
                     
-                    {/* the input form  */}
-                    {/* <CitySearch 
-                        onSearchComplete={this.handleSearch}
-                    />
-                     */}
-                    {/* code for api call within react */}
                     {/* if no error message exists then display the weather message */}
-                    {/* { this.state.error === undefined &&
-                        <div>
-                            <h2>{this.state.description}</h2>                    
-                            <p>{this.state.message}</p>     
-                        </div>
-                    } */}
+                    { this.state.error === undefined &&
+                    <div className="weather-result">
+                        <h2>{this.state.description}</h2>                    
+                        <p>{this.state.message}</p>     
+                    </div>
+                    }
 
                     {/* if error exists then display it */}
                     { this.state.error !== undefined && 
                          <p>{this.state.error}</p>
                     }
+                    
+                    <SearchForm 
+                        onSearchComplete={this.handleSearch}
+                    />
 
-                    <form onSubmit={this.handleSubmit} className="form">
-                        <input
-                            type="text"
-                            value={this.state.city}
-                            id="city"
-                            onChange={e => this.setState({ 
-                                city: e.target.value 
-                            })}
-                        />
-                        
-                        <div onChange={this.handleUnitChange}>
-                            <input 
-                                type="radio" 
-                                name="units" 
-                                value="metric" 
-                                id="C"
-                                defaultChecked
-                            />
-                            <label 
-                                htmlFor="celcius">Celcius
-                            </label>
-                            <input 
-                                type="radio" 
-                                name="units" 
-                                value="imperial" 
-                                id="F" 
-                            />
-                            <label 
-                                htmlFor="fahrenheit">Fahrenheit
-                            </label>                            
-                        </div>
-                        <button type="submit">Submit</button>
-                    </form>
-
-                    <div>
-                        <h2>{this.state.description}</h2>                    
-                        <p>{this.state.message}</p>     
-                    </div>
-
+                    
                 </header>
             </div>
         );

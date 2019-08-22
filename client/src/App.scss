@@ -43,6 +43,10 @@ h1, h2 {
   font-size: calc(10px + 6vmin);
 }
 
+.weather-result {
+  min-height: 3rem;
+}
+
 .form {
   #city {
     border-radius: 4px;
