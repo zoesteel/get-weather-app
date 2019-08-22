@@ -65,12 +65,17 @@ class SearchForm extends Component {
     render () {
         return (
             <form onSubmit={this.handleSubmit} className="form">
+                <label 
+                    htmlFor="city">Enter city:
+                </label>
+                
                 <input
                     onChange={this.handleChange}
                     type="text"
                     value={this.state.city}
                     id="city"                   
                 />
+                
                 
                 <div onChange={this.handleUnitChange}>
                     <input 
@@ -81,7 +86,7 @@ class SearchForm extends Component {
                         defaultChecked
                     />
                     <label 
-                        htmlFor="celcius">Celcius
+                        htmlFor="C">Celcius
                     </label>
                     <input 
                         type="radio" 
@@ -90,7 +95,7 @@ class SearchForm extends Component {
                         id="F" 
                     />
                     <label 
-                        htmlFor="fahrenheit">Fahrenheit
+                        htmlFor="F">Fahrenheit
                     </label>                            
                 </div>
                 <button type="submit">SUBMIT</button>
