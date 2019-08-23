@@ -7,3 +7,7 @@ The React app runs on localhost:3000 and can be started with yarn start.
 
 ## Express
 The Express server runs on localhost:3001 and can be started with npm run server.
+
+### Tests
+
+There is currently no testing but I will be adding this soon.
